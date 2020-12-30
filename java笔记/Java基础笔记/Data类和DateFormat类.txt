@@ -1,0 +1,14 @@
+无参构造函数:new Date();
+
+有参构造函数new Date(1607616000000L);参数是long类型的毫秒
+创建的对象时把参数转换成日期值
+
+常用的方法:String toString(),将日期对象以Thu(:星期) Oct(:月份) 24(:日) 20:22:43 CST 2019(:年份)的格式打印出来
+	Long getTime(),返回自1970年一月一日 00:00:00 GMT以来对象表示的毫秒值,即把日期对象转换成毫秒值;
+
+DateFormat抽象类的子类SimpleDateFormat常用来创建对象
+构造方法:SimpleDateFormat(String pattern(:日期格式化的字符串形式))
+
+DareFormat类的常用的方法:
+	String format(Date date),将一个Date格式化为日期/时间字符串
+	Date parse(String source),从给定字符串的开始解析文本,生成一个日期

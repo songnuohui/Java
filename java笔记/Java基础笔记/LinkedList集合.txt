@@ -1,0 +1,11 @@
+LinkedList集合数据存储的结构是链表结构:
+常用的方法:
+	void addFirst(E e)//将指定的元素插入列表的开头
+	void addLast(E e)//......插入列表结尾
+	E getFirst()//返回此列表的第一个元素
+	E getLast()//.........最后一个元素
+	E removeFirst()//移除并返回第一个元素
+	E removeLast()//...........最后一个元素
+	E pop()//从此列表所表示的堆栈中弹出一个元素
+	E push(E e)//进栈
+	boolean isEmpty()//判断列表是否为空

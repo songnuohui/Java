@@ -1,0 +1,33 @@
+步骤:
+	1.导入jq包点js文件(jQuery-*.*.*-min.js)
+	2.创建一个html文档
+	3.<script src="js/jQuery-*.*.*-min.js"></script>引包
+	4.<body>中两个div
+	5.<script>
+		//通过js方式来获取标签为div的所有html对象
+		var divs=document.getElementsByTagName("div");
+		alert(divs.length);//可以将其当做数组来使用
+		//获取所有的div的标签体内容并改成aaa
+		for(var i=0;i<divs.length;i++){
+			divs[i].inneeHtml="aaa";
+			//js转换为jq对象来操作
+			$(divs[i]).html("ddd")
+		}
+	
+		//通过jq的方式获取div的所有html对象
+		var $divs=$("div");
+		alert($divs.length);//也可以当做数组来使用
+		//所有的div的标签体内容并改成bbb
+		$divs.html("bbb");
+		//jq转换成js对象来操作
+		$divs[0].innerHtml("ccc");
+
+		/**
+		    1.jq就是js的框架,操作更方便
+		    2.jq与js的方法不通用
+		    3.两者相互转换;
+			* jq-->js:jq对象[索引]或者jq对象.get(索引), 然后就可以使用js对象的方法了
+			* js-->jq:$(js对象)	然后就可以使用jq对象的方法了
+		
+		/
+	</script>

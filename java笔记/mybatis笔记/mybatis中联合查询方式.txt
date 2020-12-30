@@ -1,0 +1,7 @@
+ 只需要编写一个 SQL,在 StudentMapper 中添加下面效果
+ 	<association/>只要专配一个对象就用这个标签
+	此时把<association/>小的<resultMap>看待
+ 	javaType 属性:<association/>专配完后返回一个什么类型的对象.取值是一个类(或类的别名)
+假设学生(id,name,age,tid(与老师的id关联))和老师(id和name)两个表:
+	两表联合查询返回的是teacher(哪个表left join,这个表就是主体)的SQL语句为:
+	select tid=t.id,tname=t.name, sid=s.id,sname=s.name,age, tid from teacher t  left  join outer student s on s.tid=t.id

@@ -1,0 +1,10 @@
+继承(extends)
+	子类继承父类,子接口继承父接口
+封装
+	给成员变量(引用变量或基本变量)创建set/get方法
+多态
+	创建一个对象时,new 一个子类对象,用父类对象来接收(Class Son extends Father{})
+	 	Father father=new Son(); 
+	或者创建一个对象时,new 一个子类对象,用父接口抽象对象来接收(Class Son implements Father{})
+	 	Father father=new Son();       
+注:继承只支持单继承,而接口支持多继承(可实现多个接口) 

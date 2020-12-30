@@ -1,0 +1,27 @@
+SQL语言分类:DDL(管理数据库和表对象),DML(表数据的增删改),DQL(表数据的查询),DCL(数据库的用户和用户权限管理)
+
+DCL:1.管理用户:
+	1.添加用户:
+		语法:create user '用户名'@'主机名' IDENTIFIED BY '密码';
+	2.删除用户:
+		语法:DROP user '用户名'@'主机名';
+	3.修改用户代码:
+		第一种方法:语法:update user set password =password("新密码") where user = "用户名";
+		第二种方法:语法:set password for '用户名'@'主机名'=password("新密码");
+	4.查询用户:
+		1.切换到user表
+		2.查询user表:select * from user;
+
+		通配符:  %可以在任意主机使用用户登录数据库
+
+
+2.权限管理:
+	1.查询权限:①show grants for '用户名'@'主机名';例:show grants for 'root'@'%'
+	 
+	2.授予权限: grant 权限列表 on 数据库名.表名 to '用户名'@'主机名';
+		例:给张三用户授予所有权限,在任意数据库任意表上:grant all on *.* to '张三'@'localhost'	;
+	
+	3.撤销权限: revoke 权限列表 on 数据库名.表名 from '用户名'@'主机名';
+		例:revoke update on db3.'account' from '张三'@'localhost';撤销张三用户db3数据库的account表的修改权限
+
+

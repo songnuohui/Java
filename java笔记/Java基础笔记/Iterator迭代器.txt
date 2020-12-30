@@ -1,0 +1,12 @@
+描述:在Collection接口描述了一个抽象方法iterator方法，所有Collection子类都实现了这个方法。
+Iterator接口中的方法:
+	Boolean hasNext()//如果有下一个元素存在返回true
+	E next()//返回迭代的下一个元素
+使用:
+	1.创建一个集合对象ArrayList对象list
+	2.获取容器的迭代器对象,Iterator it=list.iterator()
+	3.迭代集合中的元素	while循环形式:while(it.hasNext()){syso(it.next());}
+			for循环形式:for (Iterator it=list.iterator(); it.hasNext();) {syso(it.next());}
+注意:
+	迭代的常规用法中我们要尽量避免在迭代过程中为集合添加/删除数据。否则会报错，原因是Java抛出了并发修改异常。	
+

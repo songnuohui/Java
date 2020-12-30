@@ -1,0 +1,42 @@
+异步请求,局部刷新标准:请求响应时浏览器的动作(同步操作)浏览器请求什么资源,跟随显示什么资源
+
+2. ajax:异步请求.
+	 2.1 局部刷新,通过异步请求,请求到服务器资源数据后,通过脚本修改页面中部分内容. 
+3. ajax 由 javascript 推出的. 
+	3.1 由 jquery 对 js 中 ajax 代码进行的封装,达到使用方便的效果. 
+4. jquery 中 ajax 分类
+	4.1 第一层 $.ajax({ 属性名:值,属性名:值})
+		4.1.1 是 jquery 中功能最全的.代码写起来相对最麻烦的.
+		4.1.2 示例代码
+		/*
+		url: 请求服务器地址
+		data:请求参数
+		dataType:服务器返回数据类型
+		error 请求出错执行的功能
+		success 请求成功执行的功能,function(data) data 服务器返回的数据.
+		type:请求方式
+		*/
+	$("a").click(function(){
+		$.ajax({
+			url:'demo',
+			data:{"name":"张三"},
+			dataType:'html',
+			error:function(){alert("请求出错.")},
+			success:function(data){alert("请求成功"+data)},
+			type:'POST'
+		});
+		return false;<!-- 取消点击事件的默认功能 -->
+	})
+	4.2 第二层(简化$.ajax)
+		4.2.1 $.get(url,data,success,dataType))
+		4.2.2 $.post(url,data,success,dataType)
+	4.3 第三层(简化$.get())
+		4.3.1 $.getJSON(url,data,success). 相 当 于 设 置 $.get 中dataType=”json”
+		4.3.2 $.getScript(url,data,success) 相 当 于 设 置 $.get 中dataType=”script”
+5. 如果服务器返回数据是从表中取出.为了方便客户端操作返回的数据,服务器端返回的数据设置成 json
+	5.1 客户端把 json 当作对象或数组操作.
+6. json:数据格式. 
+	6.1 JsonObject : json 对象,理解成 java 中对象,格式是(key-value形式)
+		6.1.1 {“key”:value,”key”:value}
+	6.2 JsonArray:json 数组
+		6.2.1 [{“key”:value,”key”:value},{“key”:value,”key”:value}]

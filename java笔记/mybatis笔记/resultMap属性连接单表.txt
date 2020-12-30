@@ -1,0 +1,16 @@
+mapper.xml文件中这样配置:
+
+	<resultMap type="teacher" id="myamp">
+	<id column="id" property="id1">
+	//其他列属性用result标签
+	<result column="name" property="name1">
+	//如果关联一个对象,用association标签
+<association property="关联表的对象" select="com.yzgg.mapper.关联表mapper.selById方法" column="关联表对应的列属性tid">
+	//如果关联多个对象,用collection标签
+.................................................................................
+	</resultMap>
+
+	<select id="selAll" resultMap="mymap">
+		select * from teacher
+	</select>
+

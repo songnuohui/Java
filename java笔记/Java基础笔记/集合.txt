@@ -1,0 +1,21 @@
+﻿Collection接口是集合中的顶层接口,也称根接口
+
+集合的树形结构:
+	Collection接口常用的子接口:List接口(列表),Set接口(集)
+	List接口的常用的子类有:ArrayList类,LinkedList类
+	Set接口常用的子类有:HashSet类,LinkedHashSet类
+总结:Collection:
+	|- List 可以存储重复元素,有序的(元素存取顺序),有索引
+		|- ArrayList
+		|- LinkedList
+	|- Set 不能存储重复元素,无序的(元素存取顺序,LinkedHashSet是有序的),无索引
+		|- HashSet
+				|- LinkedHashSet
+
+Collection接口的基本方法:
+	boolean add(E e);
+	void clear();//移除所有元素
+	boolean contains(Object o);//判断该集合是否包含指定的元素
+	boolean remove(Object o);//移除指定的元素
+	int size();返回此collection中的元素数
+	Object[] toArray();//将collection中的元素以数组形式转换

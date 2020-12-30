@@ -1,0 +1,48 @@
+1.DriverManager:驱动管理对象
+	功能:	1.注册驱动:告诉应用程序使用哪一个数据库驱动jar	
+		方法:static void registerDriver(Driver driver);但:写代码使用:Class.forName("com.mysql.jdbc.Driver");
+		原因:com.mysql.jdbc.Driver类中存在静态代码块(里面就是调用上面的方法)	
+		
+
+		2.获取数据库连接:
+		方法:static Connection getConnection(String url,String user,String password);
+
+2.Connection:数据库连接对象
+	功能:	1.获取执行sql的对象
+		*Statement createStatement();
+		*PreparedStatement prepareStatement(String sql);
+		2.管理事务
+		*开启事务:setAutoCommit(boolean autoCommit)
+		*提交事务:commit
+		*回滚事务:rollback()
+3.statement:执行sql的对象
+	1.boolean execute(String sql)//可以执行任意的SQL.了解即可,用不到基本上
+	2.int executeUpdate(String sql);//执行DML(增insert删delete改update)语句和DDL(create,alter,drop)语句
+	3.ResultSet executeQuery(String sql);//执行DQL(select)语句
+
+4. ResultSet:结果集对象,封装查询结果
+	1. boolean next();游标向下移动一行
+	2.getXxx(参数);//获取数据
+		*Xxx:代表数据类型 如:int getInt(),Double getDouble(),String getString()
+		*参数:	1.int代表列的编号,从1开始 如:getString(1);
+			2.String:代表列名称 如:getDouble("name");
+
+5.PreparedStatement:执行SQL的对象
+	1.Sql注入问题:有一些SQL特殊的关键字段参与字符串的拼接,会造成安全问题
+		1.输入用户名随便,输入密码:a' or 'a'='a
+		2.SQL语句显示:select * from user where username='adkajsdf' and password='a' or 'a' = 'a'
+	2. 解决SQL注入问题:使用5.PreparedStatement对象来解决
+	3.预编译的SQL:参数使用?作为占位符
+	4.步骤:
+		1.导入jar包,mysql.connection-Java-5.1.37-bin.jar
+		2.注册驱动
+		3.获取数据库的连接对象Connection driverManager.getConnection()
+		4.定义SQL语句:注意:参数使用?占位符
+		5.获取执行sql语句的对象PreparedStatement Connection.getPreparedStatement (String sql);
+		6.给?赋值
+			*方法:setXxx(参1,参2);//参数1:?的位置编号 从1开始  参数2:?的值
+		7.执行sql,接受返回结果,不需要传递SQL语句
+		8.处理结果
+		9.释放资源
+.
+

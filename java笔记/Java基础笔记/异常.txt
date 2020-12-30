@@ -1,0 +1,7 @@
+异常(Exception)和错误(Error)的根类是Throwable,异常类都继承java.lang.Throwable
+
+严重错误(Error)无法通过处理的错误
+编译时异常Exception,编译时无法编译通过,如日期格式化异常
+运行时异常RuntimeException,时Exception的子类,可以不处理,如,数字异常
+
+声明抛出异常用throws,捕获异常用try-catch-finally

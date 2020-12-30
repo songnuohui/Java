@@ -1,0 +1,247 @@
+一.SQL语言分类，1.DDL 操作数据库和表对象,2.DML增删改表数据 3.DQL数据查询语言 4.DCL 数据库访问权限，安全级别及创建用户
+　
+　1、新建用户：
+　　　　CREATE USER name IDENTIFIED BY 'ssapdrow';
+　　2、更改密码：
+　　　　SET PASSWORD FOR name=PASSWORD('fdddfd');
+　　3、权限管理
+　　　　HOW grants FOR name; //查看name用户权限
+　　　　grant SELECT ON db_name.* TO name;　　　　//给name用户db_name数据库的所有权限
+　　　　REVOKE SELECT ON db_name.* TO name;　　　　//GRANT的反操作，去除权限；
+一.DDL:数据库和表对象的操作:
+
+  一.数据库操作：
+   　1、查看数据库：
+　　　　SHOW DATABASES;
+      2、创建数据库：
+　　　　CREATE DATABASE db_name;　　//db_name为数据库名
+　　3、使用数据库：
+　　　　USE db_name;
+　　4、删除数据库：
+　　　　DROP DATABASE db_name;
+  二、创建表：
+　　1、创建表：
+　　　　CREATE TABLE table_name(
+　　　　id TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,　　　　//id值，无符号、非空、递增——唯一性，可做主键。
+　　　　name VARCHAR(60) NOT NULL
+　　　　score TINYINT UNSIGNED NOT NULL DEFAULT 0,　　　　//设置默认列值
+　　　　PRIMARY KEY(id)
+　　　　)ENGINE=InnoDB　　　　//设置表的存储引擎，一般常用InnoDB和MyISAM；InnoDB可靠，支持事务；MyISAM高效不支持全文检索
+　　　　DEFAULT charset=utf8;　　//设置默认的编码，防止数据库中文乱码
+　　　　如果有条件的创建数据表还可以使用 >CREATE TABLE IF NOT EXISTS tb_name(........
+　　2、复制表(两种)：
+	2.1:create table 表名 like 被复制的表名;
+　　　　	2.2:CREATE TABLE 表名 SELECT * FROM 被复制的表名;
+　　　　		或者部分复制：
+　　　　		2.2.1CREATE TABLE 表名SELECT id,name FROM 被复制的表名
+　　3、创建临时表：
+　　　　CREATE temporary TABLE 表名(这里和创建普通表一样);
+　　4、查看数据库中可用的表：
+　　　　SHOW TABLES;
+　　5、查看表的结构：
+　　　　desc 表名;
+　　　　也可以使用：
+　　　　SHOW COLUMNS in 表名;　　　　//from也可以
+　　6、删除表：
+　　　　drop [ TEMPORARY ] TABLE [ IF EXISTS ] 表名[,表名2,.....]
+　　　　实例：
+　　　　DROP TABLE IF EXISTS 表名;//判断存在就删除
+  三、修改表：
+　　1、表重命名：
+　　　　	rename TABLE name_old TO name_new;
+　　　　	还可以使用：
+　　　　	alter TABLE name_old rename to name_new;
+      2、添加列：
+　　　　	ALTER TABLE 表名 ADD 列名 数据类型;
+      3.修改表的字符集:
+	alter table 表名 character set 字符集名称;
+      4.修改列名称,数据类型:　
+	alter table 表名 change 列名 新列名 新数据类型;
+	alter table 表名 modify 列名 新数据类型;//只改数据类型
+      5.删除列:
+	alter table 表名 drop 列名;
+二、DML:增删改表中的数据
+  一.插入数据：
+　　1、插入数据：
+　　　　	INSERT INTO 表名(列名1,...,列名n)VALUES(值1,...,值n),(值1,...,值n),(值1,...,值n);
+　　　　	这里的插入多条数据直接在后边加上逗号，直接写入插入的数据即可；主键id是自增的列，可以不用写,列名和值要一一对应。
+	表名后不加列名,默认给所有列添加
+　　2、插入检索出来的数据：
+　　　　INSERT INTO 要插入的表名(列名,...,列名n) SELECT 列名,...,列名n FROM 检索的表名;
+  二、更新数据：
+　　1、指定更新数据：
+　　　　UPDATE 表名 set 列名=值,列名=值,....[ WHERE 条件];
+　　　　UPDATE tablename SET columnName=NewValue [ WHERE condition ]
+  三、删除数据：
+　　1、删除数据：
+　　　　DELETE FROM 表名 [WHERE 条件];
+三.DQL:查询表中的数据:
+	一.语法:1.select 字段列表	2.from 表名列表 		3.where 条件列表 
+	4.group by 分组字段的分组查询  例:select sex,AVG(math),count(id) as 人数 from 表名 where math>70 group by sex having 人数>2
+	5.having 分组之后的条件            例:以上的having 人数>2
+	6.order by 排序	例:select * from 表名 order by 字段名 排序方式(默认是asc升序,还有desc降序),字段名 排序方式;	
+	7.limit 分页限定:语法:limit 开始的索引,每页查询的条数
+		注:公式:开始的索引=(当前页码-1)*每页显示的条数,select * from 表名 limit 0,3;
+	二.基础查询:
+		1.多个字段的查询:select 字段名,字段名,... from 表名;
+		2.去除重复:distinct
+		3.一般可以使用四则运算计算列的值(一般只会进行数值型的计算)
+			ifnull(字段名,代替值):null参与的计算结果都为null
+		4.起别名:as或者as也可以省略
+	例子:-- 计算math 和english分数之和
+	select name,math,english,math+ifnull(english,0) as 总分 from student;//从student表中查出name,数学,英语和总分
+	select name,math 数学,english 英语,math+ifnull(english,0) 总分 from student;
+	
+	三、条件查询：
+　	　1、WHERE 语句：
+　　　　		SELECT * FROM tb_name WHERE id=3;
+　　	   2、HAVING 语句：
+　　　　		SELECT * FROM tb_name GROUP BY score HAVING count(*)>2
+　　	   3、相关条件控制符： 
+　　　　		=、>、<、<>、IN(集合)、BETWEEN a AND b、AND (或&&)、OR(或||)、
+　　　　		IS NULL 空值检测或者(is not null)、
+             		Like()用法中 % 为匹配任意、 _ 匹配一个字符（可以是汉字）、例:select name from 表名 where name like _化%;
+四:约束:
+	1.主键约束:primary key 非空且唯一注:删除主键的语句:alter table 表名 drop primary key;
+		1.1联合主键:语法:
+			create table 表名(
+			rid int,
+			uid int,
+			--创建联合主键,将两个字段作为该表的主键
+			primary key(rid,uid)
+	);
+	2.非空约束:not null	注:删除非空约束的语句:alter table 表名 modify 列名(非空约束过的) 类型;//后面不写约束条件
+	3.唯一约束:unique	注:删除唯一约束的语句:alter table 表名 drop index 列名(唯一约束过的)
+	4.外键约束:foreign key 让表与表产生关系,保证数据的正确性
+		语法:create table 表名(
+		............,
+		外键列,
+		constraint 外键名称 foreign key (外键列的名称) references 主表名称(主表列名称)
+	);
+	//删除外键:alter table 表名 drop foreign key 外键名称;
+	//创建表之后,添加外键:alter table 表名 add constraint 外键名称 foreign key (外键字段的名称) references 主表名称(主表列名称)
+		4.1,级联操作:
+			4.1.1:添加级联操作:alter table 表名 add constraint 外键名称 foreign key (外键字段的名称) references 主表名称(主表列名称)
+				on update cascade on delete cascade;
+			4.1.2:级联更新 on update cascade和级联删除 on delete cascade
+
+五、MySQL的正则表达式：
+　　1、Mysql支持REGEXP的正则表达式：
+　　　　SELECT * FROM tb_name WHERE name REGEXP '^[A-D]' //找出以A-D 为开头的name
+　　2、特殊字符需要转义。
+六、MySQL的一些函数：
+　　1、字符串拼接——CONCAT()
+　　　　SELECT CONCAT(name,'=>',score) FROM tb_name
+　　2、数学聚合函数(将一列的数据作为整体,进行纵向计算)：
+　　　　AVG (:计算平均数)、SUM (:计算总数)、MAX (:最大值)、MIN (:最小值)、COUNT(选择非空的列,主键) (:计算个数)；
+　　3、文本处理函数：
+　　　　TRIM、LOCATE、UPPER、LOWER、SUBSTRING
+　　4、四则运算符：
+　　　　+、-、*、\
+　　5、时间函数：
+　　　　DATE()、CURTIME()、DAY()、YEAR()、NOW().....
+       6.判断函数:
+            ifnull(表达式1,表达式2):null参与的运算,计算结果都为null
+	*表达式1:哪个字段需要判断是否为null;
+	*表达式2:如果该字段为null,后的替换值
+七、分组查询：
+　　1、分组查询可以按照指定的列进行分组：
+             GroupBy+Group_concat ： 表示分组之后，根据分组结果，使用 group_contact() 来放置每一组的每字段(列)的值的集合
+		select deparmant(:字段部门), GROUP_CONCAT(`name`) from employee(:表) GROUP BY deparmant
+　　　　SELECT COUNT(*) FROM tb_name GROUP BY score HAVING COUNT(*)>1;//查询出分数大于1的姓名分为一组
+
+　　2、条件使用Having；
+　　3、ORDER BY 排序：
+　　　　ORDER BY DESC|ASC　　　　=>按数据的降序和升序排列
+八、UNION规则——可以执行两个语句（可以去除重复行）
+九、全文检索——MATCH和AGAINST
+　　1、SELECT MATCH(note_text)AGAINST('PICASO') FROM tb_name;
+　　2、InnoDB引擎不支持全文检索，MyISAM可以；
+十、视图
+　　1、创建视图
+　　　　CREATE VIEW name AS SELECT * FROM tb_name WHERE ~~ ORDER BY ~~;
+　　2、视图的特殊作用：
+　　　　　　a、简化表之间的联结（把联结写在select中）；
+　　　　　　b、重新格式化输出检索的数据（TRIM，CONCAT等函数）；
+　　　　　　c、过滤不想要的数据（select部分）
+　　　　　　d、使用视图计算字段值，如汇总这样的值。
+十一、使用存储过程：
+　　个存储过程就是一个自定义函数，有局部变量参数，可传入参数，可以返回值。
+　　1、创建存储过程：
+　　　　CREATE PROCEDURE pro(
+　　　　IN num INT,OUT total INT)
+　　　   BEGIN
+　　　　SELECT SUM(score) INTO total FROM tb_name WHERE id=num;
+　　　　END;
+　　　IN (传递一个值给存储过程)，OUT（从存储过程传出一个值），INOUT（对存储过程传入、传出），INTO（保存变量）
+　　2、调用存储过程：
+　　　　CALL pro(13,@total)　　　　　　//这里的存储过程两个变量，一个是IN一个是OUT，这里的OUT也是需要写上的，不写会出错
+　　　　SELECT @total　　　　　　　　　//这里就可以看到结果了；
+　　3、存储过程的其他操作：
+　　　   SHOW PROCEDURE STATUS;　　　　　　//显示当期的存储过程
+　　　　DROP PROCEDURE pro;　　　　　　　　　//删除指定存储过程
+十二、使用游标：
+　　　1、游标的操作
+　　　　CREATE PROCEDURE pro()
+　　　　BEGIN 
+　　　　DECLARE ordername CURSOR FOR
+　　　　SELECT order_num FROM orders;
+　　　　END;
+
+　　　　OPEN ordername;　　　　//打开游标
+
+　　　　CLSE ordername;　　　　//关闭游标
+十三、触发器：
+　　触发器是指在进行某项指定操作时，触发触发器内指定的操作；
+　　1、支持触发器的语句有DELETE、INSERT、UPDATE,其他均不支持
+　　2、创建触发器：
+　　　　CREATE TRIGGER trig AFTER INSERT ON ORDERS FOR EACH ROW SELECT NEW.orser_name;
+　　　　INSERT语句，触发语句，返回一个值
+　　3、删除触发器
+　　　　DROP TRIGGER trig;
+十四、语法整理：
+　　1、ALTER TABLE（修改表）
+　　　　ALTER TABLE table_name
+　　　　(　　ADD　　　　column　　datatype 　　[ NULL | NOT NULL ]　　[ CONSTRAINTS ]
+　　　　　　 CHANGE　　column 　　datatype 　　COLUMNS　　[ NULL | NOT NULL ]　　 [ CONSTRAINTS ]
+　　　　　　 DROP　　　 column，
+　　　　)
+　　2、COMMIT(处理事务)
+　　　　COMMIT;
+　　3、CREATE INDEX(在一个或多个列上创建索引)
+　　　　CREATE INDEX index_name ON tb_name (column [ ASC | DESC ] , .......);
+　　4、CREATE PROCEDURE (创建存储过程)
+　　　　CREATE PROCEDURE pro([ parameters ])
+　　　　BEGIN
+　　　　........
+　　　　END
+　　5、CREATE TABLE(创建表)
+　　　　CREATE TABLE tb_name(
+　　　　column_name　　datetype　　[ NULL | NOT NULL ] 　　[ condtraints] ,
+　　　　column_name　　datetype　　[ NULL | NOT NULL ] 　　[ condtraints] ,
+　　　　.......
+　　　　PRIMARY KEY( column_name )
+　　　　)ENGINE=[ InnoDB | MyiSAM ]DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+　　6、CREATE USER(创建用户)
+　　　　CREATE USER user_name [ @hostname ] [ IDENTIFIED BY [ PASSWORD ] 'pass_word' ];
+　　7、CREATE VIEW （在一个或多个表上创建视图）
+　　　　CREATE [ OR REPLACE ] VIEW view_name AS SELECT。。。。。。
+　　8、DELETE (从表中删除一行或多行)
+　　　　DELETE FROM table_name [WHERE ......]
+　　9、DROP(永久删除数据库及对象，如视图、索引等)
+　　　　DROP DATEBASE | INDEX | PROCEDURE | TABLE | TRIGGER | USER | VIEW name
+　　10、INSERT （给表添加行）
+　　　　INSERT INTO tb_name [ ( columns,...... ) ] VALUES(value1,............);
+　　　　使用SELECT值插入：
+　　　　INSERT INTO tb_name [ ( columns,...... ) ]
+　　　　SELECT columns , ....... FROM tb_name [ WHERE ...... ] ;
+　　 11、ROLLBACK（撤销一个事务处理块）
+　　　　ROLLBACK [ TO savapointname ];
+　　 12、SAVEPOINT(为ROLLBACK设置保留点)
+　　　　SAVEPOINT sp1;
+　　 13、SELECT (检索数据，显示信息)
+　　　　SELECT column_name,.....FROM tb_name [ WHERE ] [ UNION ] [ RROUP BY ] [ HAVING ] [ ORDER BY ]
+　　14、START TRANSACTION (一个新的事务处理块的开始)
+　　　　START TRANSACTION
+　　 15、UPDATE(更新一个表中的一行或多行)
+　　　　UPDATE tb_name SET column=value,......[ where 

@@ -1,0 +1,51 @@
+	外连接
+左连接特点：显示全部左边表中的所有项目，即使其中有些项中的数据未填写完全。
+左外连接返回那些存在于左表而右表中却没有的行，再加上内连接的行。
+右连接与左连接类似.
+from A inner join B on
+A是左表 B是右边
+左外联和右外联的区别，其实是互补的，
+也是就A左外联B表，反过来等价于B右外联左边。如
+from A left inner jion B
+from B right inner jion A
+左外联和右外联。就是让取左表(右表)的所有数据，同时查出右表(左表)相关联的数据，没相关数据 的用null补
+举例说明
+学生表，考试成绩表
+from student left jion Result
+结果查出所有学生，和对应的成绩。但是可能有学生没参加考试，所以对应的Result为null，表示缺考。
+
+	内连接
+内连接是从结果表中删除与其他被连接表中没有匹配行的所有行，所以内连接可能会丢失信息
+
+	全连接
+select sno,name,major
+from students FULL JOIN majors ON students.mno=majors.mno
+两边表中的内容全部显示
+	
+	自身连接
+select c1.cno,c1.coursename,c1.pno,c2.coursename
+from courses c1,courses c2 where c1.pno=c2.cno
+采用别名解决问题。
+	
+	交叉连接
+select lastname.* , firstname.* from lastname CROSS JOIN firstanme
+相当于做笛卡儿积
+
+	嵌套查询
+a.用关键字IN,如查询李山的同乡：
+select * from students
+where native in (select native from students where name=’ 李山’)
+b.使用关键字EXIST,比如，下面两句是等价的：
+select * from students
+where sno in (select sno from grades where cno=’B2’)
+select * from students where exists
+(select * from grades where
+grades.sno=students.sno AND cno=’B2’)
+
+	关于排序order
+a.对于排序order，有两种方法：asc升序和desc降序
+b.对于排序order,可以按照查询条件中的某项排列，而且这项可用数字表示，如：
+select sno,count(*) ,avg(mark) from grades
+group by sno
+having avg(mark)>85
+order by 3

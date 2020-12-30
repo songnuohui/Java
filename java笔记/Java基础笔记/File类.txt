@@ -1,0 +1,18 @@
+1.File类的构造方法:
+	File(FIle parent,String child);//根据parent抽象路径名和child路径名 字符串创建一个新的实例
+		实例的字符串显示:File对象parent的字符串显示+"//"+child
+	File(String pathname);//通过将给定路径名 字符串转换成抽象路径名来创建一个新的file实例
+		实例的字符串显示:parentname
+	File(String parent,String child);//根据parent路径名 字符串和child路径名 字符串创建新的file实例
+		实例的字符串显示:parent+"//"+child
+
+2.File类的获取:
+	String getAbsolutePath()//返回此抽象路径名的绝对路径名 字符串形式
+	String getName()//返回此抽象路径名表示的文件或目录的名称
+	String getPath()//将抽象路径名转换为一个路径名 字符串
+	Long length()///返回此抽象路径名表示的文件长度
+
+
+
+
+

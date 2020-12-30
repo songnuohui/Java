@@ -1,0 +1,47 @@
+笛卡尔积:
+	*有两个集合A,B;取这两个集合的所有组成情况.
+	*要完成多表查询,需要消除无用的数据
+
+多表查询的分类:
+	1.内连接查询;
+
+		1.隐式的内链接:使用where条件消除无用的数据
+		*例子:
+		-----查询所有的员工信息和对应的部门信息
+		select * from emp,dept where emp.'dept_id'=dept.'id';
+		-----查询员工表的名称,性别,部门表的名称
+		select emp.name,emp.gender,dept.name from emp,dept where emp.'dept_id'=dept.'id';
+		-----标准的写法
+		SELECT
+			t1.name,
+			t1.gender,
+			t2.name
+		FROM
+			emp t1,
+			dept t2
+		WHERE 
+			t1.'dept_id'=t2.'id';
+
+
+		2.显示内连接:
+			语法: select 字段列表 from 表名1 inner join 表名2 on 条件;//inner 可以省略
+
+		注:内连接查询思路:
+			1.从哪些表中查询数据
+			2.条件是什么
+			3.查询哪些字段
+	
+	2.外连接查询  (用 on+条件):
+		1.左外连接:
+			语法: select 字段列表 from 表名1 left outer join 表名2 on 条件;//outer 可以省略
+			查询的是左表的所有数据和其交集部分
+		2.右外链接
+			语法: select 字段列表 from 表名1 right outer join 表名2 on 条件;//outer 可以省略
+			查询的是右表的所有数据和其交集部分
+
+	3.子查询;
+		概念:查询中嵌套查询,称嵌套查询为子查询
+		例:
+		----查询出员工信息,并且工资最高
+		select * from emp where emp.'salary'=(select MAX(salary) from emp);
+		

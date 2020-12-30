@@ -1,0 +1,13 @@
+正则表达式（英语：Regular Expression，在代码中常简写为regex）。
+常用的方法:
+	boolean matches(String regex)//判断此字符串是否匹配给定的正则表达式
+例子:	String qq="604154942";
+	String regex="[1-9][0-9]{4,14}";
+	boolean flag=qq.matches(regex);
+	
+	String[] split(String regex)//根据给定的正则表达式拆分此字符串
+例子:	String s = "18-22-40-65";
+	String regex = "-";
+	String[] result = s.split(regex);
+	System.out.println(s);
+	运行结果：String s = "18 22 40 65";

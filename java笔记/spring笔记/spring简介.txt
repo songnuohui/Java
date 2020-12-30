@@ -1,0 +1,26 @@
+4.Spring 几大核心功能(面试官hr问的spring主要就是围绕着这三大核心功能提问)
+	4.1 IoC/DI   控制反转/依赖注入
+	       4.1.1 IoC(Inversion of control) 最大的作用:解耦. 程序员不需要管理对象.解除了对象管理和程序员之间的耦合
+	4.2 AOP  面向切面编程
+	4.3 声明式事务. 
+
+5.Spring 框架 runtime
+	5.1 test: spring 提供测试功能
+	5.2 Core Container:核心容器.Spring 启动最基本的条件. 
+		5.2.1 Beans : Spring 负责创建类对象并管理对象
+		5.2.2 Core: 核心类
+		5.2.3 Context: 上下文参数.获取外部资源或这管理注解等
+		5.2.4 SpEl: expression.jar
+	5.3 AOP: 实现 aop 功能需要依赖
+	5.4 Aspects: 切面 AOP 依赖的包
+	5.5 Data Access/Integration : spring 封装数据访问层相关内容
+		5.5.1 JDBC : Spring 对 JDBC 封装后的代码. 
+		5.5.2 ORM: 封装了持久层框架的代码.例如 Hibernate
+		5.5.3 transactions:对应 spring-tx.jar,声明式事务使用. 
+	5.6 WEB:需要 spring 完成 web 相关功能时需要. 
+	      	5.6.1 例如:由 tomcat 加载 spring 配置文件时需要有 spring-web包
+6.Spring 框架中重要概
+	6.1 容器(Container): Spring 当作一个大容器.
+	6.2 BeanFactory 接口.老版本. 
+	      6.2.1 新版本中 ApplicationContext 接口,是 BeanFactory 子接口.BeanFactory 的功能在 ApplicationContext 中都有. 
+7.从 Spring3 开始把 Spring 框架的功能拆分成多个 jar. 7.1 Spring2 及以前就一个 jar

@@ -1,0 +1,7 @@
+如果在 web.xml 中设置 DispatcherServlet 的<url-pattern>为/时,当用户
+发 起 请 求 , 请 求 一 个 控 制 器 , 首 先 会 执 行 DispatcherServlet. 由
+DispatcherServlet 调 用 HandlerMapping 的DefaultAnnotationHandlerMapping 解 析 URL, 
+解 析 后 调 用HandlerAdatper 组 件 的 AnnotationMethodHandlerAdapter 调 用
+Controller 中的 HandlerMethod.当 HandlerMethod 执行完成后会返回
+View,会被 ViewResovler 进行视图解析,解析后调用 jsp 对应的.class 文
+件并运行,最终把运行.class 文件的结果响应给客户端. 以上就是 springmvc 运行原理(给面试官说的)

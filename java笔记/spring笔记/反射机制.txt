@@ -1,0 +1,29 @@
+一.反射的用途及一些应用
+反射通常由需要检查或修改Java虚拟机中运行的应用程序的运行时使用。
+spring 的 ioc/di 也是反射....
+javaBean和jsp之间调用也是反射....
+struts的 FormBean 和页面之间...也是通过反射调用....
+JDBC 的 classForName()也是反射.....
+hibernate的 find(Class clazz) 也是反射....
+
+二.通过反射机制我们可以在运行期间获取对象的类型信息，利用这一特性我们可以实现工厂模式和代理模式等设计模式，
+同时也可以解决Java泛型擦除等令人苦恼的问题。Java反射机制主要提供了以下功能：①在运行时构造一个类的对象；
+②判断一个类所具有的成员变量和方法；③调用一个对象的方法；④生成动态代理。	反射最大的应用就是框架。
+
+三.扩展功能
+应用程序可以通过使用其完全限定的名称创建可扩展性对象的实例来使用外部用户定义的类。
+
+四.在Java中我们有三种方法可以获取一个对象的反射类。
+①通过getClass方法
+在Java中，每一个Object都有一个getClass方法，通过getClass方法我们可以获取到这个对象对应的反射类：
+String s = "ziwenxie";
+Class<?> c = s.getClass();
+
+②通过forName方法
+我们也可以调用Class类的静态方法forName：
+Class<?> c = Class.forName("java.lang.String");
+
+③使用.class
+或者我们也可以直接使用.class：
+Class<?> c = String.class;
+

@@ -1,0 +1,5 @@
+SpringMVC中的四大重要组件
+	1.DispatcherServlet:前端控制器,接受所有请求(如果配置"/"则不包含jsp)
+	2.HanderMapping:解析请求格式,判断希望要执行哪个具体的方法.
+	3.HandlerAdapter:负责调用具体的方法
+	4.ViewResovler:视图解析器,解析结果,准备跳转到具体的物理视图

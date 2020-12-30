@@ -1,0 +1,54 @@
+一、单例模式和多例模式说明：
+1. 单例模式和多例模式属于对象模式。
+2. 单例模式的对象在整个系统中只有一份，多例模式可以有多个实例。
+3. 它们都不对外提供构造方法，即构造方法都为私有。单例模式的关键有两点：
+	1、构造方法为私有，这样外界就不能随意调用。
+	2、get的方法为静态，由类直接调用
+
+例如(懒汉式):这里获取实例对象的方法前的synchronized(校验锁:保证多线程运行时,
+	同一时刻一次只允许通过一个线程去执行某方法或代码块)关键字是为了线程安全
+	public class Singleton {
+    	private static Singleton instance;
+    	private Singleton (){}
+    	public static synchronized Singleton getInstance() {
+        	if (instance == null) {
+         	   instance = new Singleton();
+       	 }
+     	   return instance;
+   	 }  
+	}
+例如(饿汉式):
+	public class Singleton {
+   	private static Singleton instance = new Singleton();
+    	private Singleton (){}
+    	public static Singleton getInstance() {
+      	  return instance;
+   	 }  
+	}
+
+多例模式（Multiton）
+1 、多例类可以有多个实例
+2 、多例类必须能够自我创建并管理自己的实例，并向外界提供自己的实例。
+例如:
+	public class Color {
+  	private static final Color RED = new Color("红色");
+  	private static final Color GREEN = new Color("绿色");
+   	private static final Color BLUE = new Color("蓝色");
+     	private String title;
+    	private Color(String title){//构造方法私有化
+        		 this.title=title;
+   	 }
+     	public static Color getInstance(String color){
+        		 switch (color){
+             			case "red":return RED;
+            			case "green":return GREEN;
+            			case "blue":return BLUE;
+             			default:return null;
+         		}
+   	}
+    	public String toString(){
+        		return this.title;
+     	}
+ }
+
+

@@ -1,0 +1,38 @@
+编程式事务:
+	1.由程序员编程事务控制代码
+	2.例:OpenSessionView编程式事务
+声明式事务:
+	1.事务控制代码已经由Spring写好,程序员只需要声明哪些方法需要进行事务和如何进事务控制
+	2.声明式事务都是针对于ServiceImpl类下的方法
+	3.事务管理器是基于通知(advice)的
+	4.在Spring配置文件中配置声明事务:
+		<!-- 这里dataSource使用到properties文件中的属性,所以需要<context:property-placeholder>标签的
+			location属性来扫描到原路径下的properties文件 -->
+		<context:property-placeholder	location="classpath:db.properties,classpath:second.properties"/>
+		<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		</bean>
+		<!-- spring-jdbc.jar 中 -->
+		<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+		</bean>
+		<!-- 配置声明式事务 -->
+		<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+		<!-- 哪些方法需要有事务控制 -->
+		<!-- 方法以 ins 开头事务管理 -->
+			<tx:method name="ins*" />
+			<tx:method name="del*" />
+			<tx:method name="upd*" />
+			<tx:method name="*" />
+		</tx:attributes>
+		</tx:advice>
+		<aop:config>
+		<!-- 切点范围设置大一些 -->
+		<aop:pointcut expression="execution(* com.bjsxt.service.impl.*.*(..))" id="mypoint" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="mypoint" />
+		</aop:config>

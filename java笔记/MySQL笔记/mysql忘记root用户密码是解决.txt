@@ -1,0 +1,9 @@
+1.cmd --net stop mysql 停止mysql服务 注:需要管理员运行cmd
+2.使用无验证方式启动SQL服务: mysql --skip-grant-tables
+3.打开新的cmd窗口直接输入 mysql 命令回车就可以登录成功了
+4.use mysql
+5.update user set password =password("新密码") where user = 'root';
+6.关闭两个窗口
+7.打开任务管理器,手动结束mysqld.exe 的进程
+8.启动mysql服务
+9.使用新密码登录
