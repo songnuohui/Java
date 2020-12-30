@@ -1,0 +1,12 @@
+1:文件上传
+      commons-fileupload 组件
+  
+  1:加载  依赖的jar包  
+       commons-fileupload-1.2.1.jar
+       commons-io-1.4.jar
+       
+  2:写一个文件上传的表单
+      注意：必须加上  enctype="multipart/form-data"
+  
+  
+     

@@ -1,0 +1,31 @@
+1:el与 jstl
+  a: el    expression  language  表达式语言  
+   ${变量名}   ${对象名.属性名}
+   
+   ${变量名}:取值其实是从四大范围之内获取的： 依次
+      ${pageScope.变量名}
+      ${requestScope.变量名}
+      ${sessionScope.变量名}
+      ${applicationScope.变量名} 找到就不往下执行
+        如果applicationScope也没有 则返回  ""空字符串
+        我们也可以根据范围来获取
+        
+  b：jstl  (javaServerPage  standard tag library )
+           jsp 标准标签库      
+          因为 el没有流程控制语句   jstl可以实现流程控制
+          使用步骤：
+        1.引入 jstl依赖的jar包
+           jstl.jar   standard.jar
+                   
+        2：在需要使用标签库的页面中 引入标签库
+          <%@ taglib uri="引入标签库的路径" 
+                          prefix="使用标签的前缀"%>  
+                          
+               标签库：
+            核心标签库：c    uri: http://java.sun.com/jsp/jstl/core
+            功能标签库 ：fn  uri: http://java.sun.com/jsp/jstl/function
+            格式化标签库 :fmt uri: http://java.sun.com/jsp/jstl/fmt         
+                           
+           
+  
+    

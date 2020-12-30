@@ -1,0 +1,33 @@
+1:需要实现控制台的用户注册 登录  登录成功可以修改密码
+ 也可以查询所有其他账户 可以注销自身账户功能
+ 
+ 1：创建 t_member 表
+       id   -->主键  自动增长 序列
+       name -->输入  唯一键
+       pass  --》输入
+       
+    create table t_member(
+        id number,
+        name varchar2(20),
+        pass varchar2(20),
+        constraint t_member_pk primary key(id),
+        constraint t_member_uk unique(name)
+    );  
+    create sequence seq_member
+      start with 1
+      increment by 1
+      maxvalue 999999999;
+      
+2:-->把对表 table  crud(create retrieve update delete)添删改查
+     转变成   面向对象的操作
+      Member  --》 t_member
+      id---------> id
+      .....      
+ Member对于表  让 类的属性 对应表的列
+ po-->  Persistence Object （持久化对象）
+ 
+ 3：定义对Member添删改查操作的接口
+  dao--》DataBase Access Object (数据库访问对象)
+   MemberDao
+
+    

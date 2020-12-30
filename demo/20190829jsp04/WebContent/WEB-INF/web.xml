@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>20190829jsp04</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+      <servlet-name>IndexServlet</servlet-name>
+      <servlet-class>com.zt.servlet.IndexServlet</servlet-class>
+      <init-param>
+           <param-name>className</param-name>
+           <param-value>oracle.jdbc.driver.OracleDriver</param-value>
+      </init-param>
+      <init-param>
+           <param-name>url</param-name>
+           <param-value>jdbc:oracle:thin:@l27.0.0.1:1521:orcl</param-value>
+      </init-param>
+      <init-param>
+           <param-name>user</param-name>
+           <param-value>scott</param-value>
+      </init-param>
+       <init-param>
+           <param-name>pass</param-name>
+           <param-value>tiger</param-value>
+      </init-param>
+  </servlet>
+  <servlet-mapping>
+       <servlet-name>IndexServlet</servlet-name>
+       <url-pattern>/index</url-pattern>
+  </servlet-mapping>
+  
+     <servlet>
+         <servlet-name>configjsp</servlet-name>
+         <jsp-file>/config.jsp</jsp-file>
+         <init-param>
+             <param-name>name</param-name>
+             <param-value>系统管理员</param-value>
+         </init-param>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>configjsp</servlet-name>
+         <url-pattern>/config</url-pattern>
+     </servlet-mapping>
+      
+       <servlet>
+         <servlet-name>listjsp</servlet-name>
+         <jsp-file>/WEB-INF/list.jsp</jsp-file>
+         <init-param>
+             <param-name>name</param-name>
+             <param-value>系统管理员</param-value>
+         </init-param>
+     </servlet>
+     <servlet-mapping>
+         <servlet-name>listjsp</servlet-name>
+         <url-pattern>/list.jsp</url-pattern>
+     </servlet-mapping>
+</web-app>

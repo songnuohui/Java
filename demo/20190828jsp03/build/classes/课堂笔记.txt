@@ -1,0 +1,87 @@
+1:jsp 9大内置对象
+
+  a:request      用户的请求对象      HttpServletRequest 
+                request.setCharacterEncoding("")设置请求编码
+                request.getParameter("参数名")  获取请求参数对应的值
+                request.getParameterValues("参数名")获取请求参数对应的值
+                 
+               request.getRequestDispatcher("转发的目标地址")
+                      .forward(request,response); 请求转发
+               request.setAttribute("key",value);
+                              设置一个key值value放在一个request范围之内  
+               request.getAttribute("key")   
+                               在一个request范围之内获取key对应的值
+                request.getRequestURL() 获取请求的完整路径
+                request.getRequestURI() 获取请求的相对路径  
+                request.getQueryString()获取请求参数列表
+                request.getContextPath()获取请求工程名
+                request.getServerName() 获取请求服务器名
+                request.getServerPort() 获取请求服务器端口号
+                request.getRemoteAddr()获取请求客户端的ip       
+       
+  
+  b:response     服务器的响应对象  HttpServletResponse
+              
+             response.setCharacterEncoding("")设置响应编码
+             response.sendRedirect("要跳转的路径") 重定向
+             
+             response重定向可以跳转到服务器内部和外部其他服务器。
+             forward请求转发只能在服务器内部。
+       
+  c:session 对应一个用户的一次会话
+                        只要用户用浏览器访问一个web应用程序 都会产生一个唯一的session
+                       直到用户关闭web应用程序浏览器结束       
+                       或者用户长期不进行其他操作达到了session 的失效时间 也会清除
+                      或者遇到了 程序里面存在 session重置或清除 方法       
+                      
+      session的默认失效时间30分钟  可以配置
+          web.xml
+            <session-config>
+                <session-timeout>3</session-timeout>
+            </session-config>
+            
+        session.removeAttribute("sessionkey");
+                        清除单个session key 的值
+                        
+        session.invalidate(); 重置session 清除里面的所有 key 的值       
+        session.setAttribute("key",value);
+                    设置一个key值value放在一个session范围之内  
+        session.getAttribute("key")   
+                    在一个session范围之内获取key对应的值                   
+        session.getId()获取seession的唯一主键值       
+        
+      session一般用来存储单个用户的重要信息 比如系统登录用户，权限等
+             
+     1: 在Servlet中获取session:   
+         HttpSession session= request.getSession();  
+        
+        
+   d:application 全局的 应用级别范围 只要web服务器不关闭 就一直存在 
+   
+         application.setAttribute("key",value); 
+                        设置一个key值value放在一个application范围之内  
+         application.getAttribute("key");
+                        在一个application范围之内获取key对应的值              
+            
+         application一般用来存储系统所有用户的重要信息
+                            比如系统的访问量，在线人数等  
+                            
+             在Servlet中获取application:   
+          ServletContext application=request.getServletContext();                    
+                                   
+   e:out 输出流对象     --> PrintWriter
+      
+      out.print("<li>"+s+"</li>");
+             相对：    <%= %>     
+        在Servlet中获取输出流对象
+          PrintWriter out=response.getWriter();
+           out.write();
+           
+    f：exception
+    
+    g: page
+    
+    h：pageContext
+    
+    i：config        
+   

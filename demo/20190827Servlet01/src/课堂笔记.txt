@@ -1,0 +1,53 @@
+1:Servlet  一个运行在服务器端java组件 可以用来处理用户的请求
+
+2：怎么写Servlet
+  a:创建一个类 让这个类继承 HttpServlet 类
+  b:重写HttpServlet 类中的 service()方法
+      service()方法 用来处理用户的请求
+      
+  c:需要在web.xml配置
+    <servlet>
+         <servlet-name>指定一个名称任意不重复即可</servlet-name>
+         <servlet-class>填写这个类的完整类路径</servlet-class>
+    </servlet>
+    <servlet-mapping>
+       <servlet-name>必须对应要映射的那个servlet-name</servlet-name>
+       <url-pattern>这个类的访问路径</url-pattern>
+    </servlet-mapping>  
+    
+    
+ 2:request的其他方法
+    1： request.setAttribute("key", value); 
+                           key对应一个字符串                       ->名称   
+                           value 对应任何数据类型Object ->传递内容
+            把一个 key 对应的值放在request 范围内
+           只要是同一个request请求都可以获取这   key value 对应值  
+            
+    2： Object values= request.getAttribute("key"); 
+               从 request 范围内去获取  key对应的值 
+               
+               
+               
+ 3: redirect forward两种跳转的区别： 
+   1：请求重定向 redirect
+         response.sendRedirect("success.jsp");
+                  浏览器地址栏发生变化 两次请求 
+                  不可以传递request范围内的值  但可以通过 ?key=value&..来传递值
+          ?来传递值
+           String value=request.getParameter("key") ;
+                                     
+ 
+   2:请求转发 forward
+      request.getRequestDispatcher("success.jsp")
+    		              .forward(request, response); 	
+    	浏览器地址栏不发生变化 一次请求
+    	可以通过   request.setAttribute("key", value); 
+    	来传递request范围内的值  也可以  通过 ?key=value&..来传递值  
+    	
+    	1:request.setAttribute("key", value);
+    	取值：
+    	  Object value=request.getAttribute("key");
+    	  
+    	2：?key=value&..来传递值
+                  取值：   String value=request.getParameter("key");
+    	                                        

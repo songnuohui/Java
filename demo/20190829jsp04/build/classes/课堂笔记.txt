@@ -1,0 +1,128 @@
+1:Servlet生命周期
+   分两种请求：
+    1：web.xml中如果配置了
+       <load-on-startup></load-on-startup>
+     
+     a:在tomcat服务器启动的时候 调用servlet的构造方法把
+        Servlet实例化（创建对象）
+     b:调用 init方法进行初始化    （ a b 都仅仅调用一次） 
+       （一个Servlet 在web服务器中仅存在一个对象 也仅仅进行一次实例化与初始化）
+     
+     c:用户发生请求给这个Servlet时候 调用该对象的 service()方法进行
+               处理用户的请求
+       service()方法  根据用户的请求方式 get请求调用 doGet()方法
+       post请求调用 doPost()方法
+     d：当正常关闭  tomcat服务器调用该对象的destroy()方法销毁该对象
+     
+     
+    2：如果没有配置  <load-on-startup></load-on-startup>
+        a:在第一次用户请求的时候 调用servlet的构造方法把
+        Servlet实例化（创建对象）
+        b:调用 init方法进行初始化    （ a b 都仅仅调用一次） 
+             （一个Servlet 在web服务器中仅存在一个对象 也仅仅进行一次实例化与初始化）
+        后面的请求
+       c:用户发生请求给这个Servlet时候 调用该对象的 service()方法进行
+               处理用户的请求
+       service()方法  根据用户的请求方式 get请求调用 doGet()方法
+       post请求调用 doPost()方法
+     d：当正常关闭  tomcat服务器调用该对象的destroy()方法销毁该对象
+     
+  
+  
+  2：jsp的内置对象
+      1：request  用户的请求信息
+      
+      2:response  服务器端的响应信息
+      
+      3:session   存储单个用户的一次会话  如果用户不关闭浏览器
+                                    连接的时间没有超时 也没有清除 或者重置session
+                  session就会一直存在
+                  session存放在服务器端（安全）           
+                          常见方法：        
+                  session.isNew() 判断是否是一次新的会话
+                  session.setAttribute("key",value);
+                                     把key 对应的值value存储到session范围之内
+                 Object obj= session.getAttribute("key")   
+                                   从  session范围之内去查询key对应的值      
+                 session.removeAttribute("key");  
+                                   从  session范围之内移除单个key对应的值            
+                 session.invalidate();
+                                        重置session 清除所有key对应的值 
+                    session.getId()也会发生变化   
+                    
+        Servlet中获取session对象
+              HttpSession session=  request.getSession();                                 
+      
+      4:application 存储所有用户共享的 全局的信息
+                                        仅仅服务器重启后才会销毁
+                    application存放在服务器端（安全）       
+               application.setAttribute("key",value);
+                                     把key 对应的值value存储到application范围之内
+                 Object obj= session.getAttribute("key")   
+                                   从  application范围之内去查询key对应的值      
+        
+       Servlet中获取application对象
+         ServletContext application=request.getServletContext();
+       
+      5:out  页面输出流
+            out.print(); -->相对于  <%= %>
+           Servlet中获取out对象
+         PrintWriter out= response.getWriter();
+            out.write();
+               
+      6:exception 异常对象
+         jsp的异常处理：
+            1：在可能发生异常的页面中 指定异常页面
+               <%@ page errorPage="error.jsp"%>
+               
+           2：在异常页面中捕捉异常 exception对象
+              <%@ page isErrorPage="true"%>
+                
+               <%=exception.getMessage() %>
+      
+      7：config  服务器配置信息对象
+      
+         Servlet config使用：
+            1: 在Servlet web.xml配置信息中 配置要传递的参数与值
+              <init-param>
+                  <param-name>name</param-name>
+                 <param-value>value</param-value>
+              </init-param>
+              
+            2: Servlet init方法中获取参数值
+             public void init(ServletConfig config){
+                 String value=config.getInitParameter("name");
+              }
+              
+        jsp config使用：
+                     把 jsp 配置成 Servlet
+          <servlet>
+             <servlet-name>listjsp</servlet-name>
+             <jsp-file>/WEB-INF/list.jsp</jsp-file>
+             <init-param>
+                 <param-name>name</param-name>
+                 <param-value>系统管理员</param-value>
+             </init-param>
+          </servlet>
+          <servlet-mapping>
+               <servlet-name>listjsp</servlet-name>
+               <url-pattern>/list.jsp</url-pattern>
+          </servlet-mapping>   
+       在jsp页面中    <%=config.getInitParameter("name");%>
+               
+      8：page  代表当前页面对象  相对与java类中的this
+      
+      9:pageContext 页面级别的作用域
+         pageContext.setAttribute("key",value);
+                      把key 对应的值value存储到当前页面范围之内   
+         pageContext.getAttribute("key");  
+              从当前页面范围之内 去查找 key对应的值      
+         提供获取其他内置对象的方法：     
+      pageContext.getRequest();
+      pageContext.getResponse();
+      pageContext.getOut();
+      pageContext.getException();
+      pageContext.getSession();
+      pageContext.getServletContext();    
+                      
+     

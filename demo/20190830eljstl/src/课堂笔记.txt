@@ -1,0 +1,95 @@
+1:EL与JSTL
+  
+  el  ->Express lanuage  表达式语言
+  
+       ${key}         ${obj.attribute}
+       
+ 查询范围 -》先从 pageContext 范围查找 如果不存在
+                      再从    request   范围查找 如果不存在
+                      再从    session   范围查找 如果不存在  
+                      再从   application   范围查找
+                  如果不存在  返回  "" 空串       
+                  如果找到 停止往后查找 做输出   
+                  
+     如果都存在 想取固定某个区域的值可以指定区域
+        pageContext --->   ${pageScope.key} 
+        request      -->   ${requestScope.key} 
+        session      -->   ${sessionScope.key}  
+        application   -->  ${applicationScope.key}   
+                  
+                  
+ JSTL java server Page standard tagLib (java服务器页面的标准标签库) 
+    el只能取值输出不能实现流程控制语句
+    jstl一个标签库 里面可以实现el表达式的流程控制语句
+    
+    使用步骤：
+        1：引用jstl 依赖jar
+             jstl.jar   standard.jar
+             
+        2：在需要使用标签库的jsp页面中引入需要的标签库 
+          <%@ taglib uri="标签库路径" prefix="引用标签前缀"%>
+          
+         a:c标签库:core(核心)标签库
+           <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+                 prefix="c"%>     
+          1： 提供了 流程控制的所有语句     
+        单条分支：
+            <c:if test="${变量+比较运算}"> 成年人！</c:if>        
+       多条分支：
+            <c:choose>
+             <c:when test="${变量+比较运算}">结果1</c:when>
+               ....
+             <c:when test="${变量+比较运算}">结果n</c:when>
+             <c:otherwise> 其他情况</c:otherwise>
+           </c:choose>              
+    循环结构：
+        <c:forEach items="${遍历的集合}" var="当前对象" 
+                   varStatus="当前状态"
+                   begin="循环开始位置默认0"
+                   end="结束位置 默认是集合元素个数"
+                   step="增量默认是1"
+                   >                          
+             当前状态.index   显示索引位置 0开始
+             当前状态.count  当前的计数器 1开始    
+             
+       <c:forTokens items="要处理的字符串" delims="分隔符"
+                     var="当前对象"
+                     varStatus="当前状态"
+                     begin="循环开始位置默认0"
+                     end="结束位置 默认是集合元素个数"
+                     step="增量默认是1"
+                     >
+      
+           b:fn标签库:Functions(功能)标签库
+             <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"
+                 prefix="fn"%>            
+             ${fn:contains(name, searchString)}  
+                           判断 searchString在name是否存在                          
+              ${fn:length(name)}     获取name的长度
+              ${fn:length(obj.属性)}  获取obj.属性的长度            
+              ${fn:substring(name,start,length)}     
+                           截取 name的子串 从start 开始 获取length个字符                         
+             ${fn:startsWith(name, "字符串a")}   
+                               判断   name 是否是以 字符串a 开始                        
+             ${fn:endsWith(name, "字符串a")}   
+                               判断   name 是否是以 字符串a 结束                                  
+             ${fn:escapeXml(name)}    
+                              忽略掉name 内容里面的标签不当成标签按照字符直接显示  
+                                                    
+      c:fmt标签库:fmt(格式化)标签库     
+             <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"
+                 prefix="fmt"%>                 
+              格式化数值
+          <fmt:formatNumber value="${price}"  pattern="#.###"/>
+             #.###  代表取小数点后三位有效位
+          
+              格式化时间   
+        <fmt:formatDate value="${createTime}" pattern="yyyy"/>       
+               yyyy-MM-dd HH:mm:ss   yyyy年
+                                      MM月
+                                      dd日 
+                                      HH时  HH 24进制   hh 12进制
+                                      mm分
+                                      ss秒
+                   
+                               

@@ -1,0 +1,72 @@
+1：web项目的目录结构
+   
+   javaResources->src 存放java源程序的目录
+   
+   WebContent --》存放web项目的页面资源等文件的目录
+   
+   WebContent->WEB-INF  这个目录是一个受保护的目录 
+                                               不能通过外部直接访问的
+                                               
+   WebContent->WEB-INF/web.xml 
+                    web.xml 是web应用程序的配置文件（重要）
+                    
+   WebContent->WEB-INF/lib 这个是web应用程序的依赖的类库jar存放目录
+  
+  
+   
+2：jsp   (java Server Page) 运行在服务器端的java界面
+jsp里面可以包含：
+     1：html div css
+     2:javaScript
+     3:java源代码
+     
+     
+html div css javaScript写法与 在html文件中的写法保持一致。
+java源代码写法的三种方式：
+ 1：<%!    %>      全局的方法或变量 （全局变量所以用户共享）
+ 2：<%   
+        java源代码     局部的方法或变量 （局部变量单个用户共享）
+    %>
+ 3：<%=  %>  输出java中变量的值
+ 
+
+ 
+ jsp:  实现动态的交互
+ 
+ jsp内置对象(9大)
+   1：request   对应一个客户端（浏览器端）的请求对象
+                               通过这个对象可以获取用户的请求信息
+                               
+    客户端（浏览器端）发送的请求
+        1：form 表单
+        2：a超级连接    
+        
+      
+         1:request.getParameter("参数名称"); 
+                   获取用户提交的参数名对应的值     返回值是String
+                   
+        A: 获取表单传值
+         <form action="checkUser.jsp" method="post">
+           <p>姓名：<input type="text" name="name"></p>
+           <p>密码：<input type="password" name="pass"></p>
+            <p><input type="submit" value="登录"></p>
+         </form>
+         String name= request.getParameter("name"); 
+         String pass=  request.getParameter("pass");      
+                                 
+        B:获取链接的传值
+          <a href="login.jsp?id=10">我要登录系统</a>
+             String id= request.getParameter("id");            
+                   
+                   
+         2:request.setCharacterEncoding("UTF-8"); 设置请求编码
+          	其他方法见（request.jsp）
+                               
+   
+   2:response    对应服务器端的一个响应对象
+                                  通过这个对象可以反馈信息给客户端（浏览器端）
+   
+       1：客户端的页面跳转：
+        response.sendRedirect("要跳转的路径");
+
+  

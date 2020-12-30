@@ -1,0 +1,49 @@
+1:jdbc操作的时候表的不同数据类型的处理
+ 
+ 班级通讯录
+ t_addressBook
+   id       number       主键
+   name     varchar2(30) 姓名
+   sex      char(2)      性别
+   tel      varchar2(20) 联系电话
+   birthDay  date        生日
+   company   varchar2(50) 工作单位
+   
+
+2：jdbc的批处理：
+      1：pstmt.addBatch(); //把这次执行放入批处理池
+               批量的数据也不宜太大  以n为单位进行批处理
+           count++;
+	        if(count%10000==0){ 
+					//批量的数据也不宜太大  以10000为单位进行批处理
+			pstmt.executeBatch();
+					count=0;
+		    }
+	  2：执行这个批处理
+	  pstmt.executeBatch();
+
+3：jdbc的事务控制
+   t_user
+   id   name    money
+   
+   1   a      2000
+   2   b      3000
+   
+   a-》b 1000
+   
+   a  1000
+   b  4000
+   
+  1：jdbc事务的默认自动提交true 改为 false
+			conn.setAutoCommit(false); 
+
+  2:在多条要执行的语句后面 手工提交
+      pstmt.executeUpdate();
+     ........
+     pstmt.executeUpdate();
+     
+    conn.commit();
+  3:如果存在异常就回滚事务
+     conn.rollback();
+  4：最后还原jdbc事务自动提交的机制  
+    conn.setAutoCommit(true);

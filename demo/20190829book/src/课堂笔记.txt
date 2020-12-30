@@ -1,0 +1,29 @@
+1:Servlet的生命周期
+    1：用户第一次请求的时候调用 构造器 实例化一个对象（仅仅调用一次）
+           （每个Servlet在tomcat服务中仅仅存在一个对象 单例设计模式）
+    2：调用 init 方法进行初始化（仅仅调用一次）
+    3:调用 service方法 处理用户的请求（每次请求都会调用）
+       service方法根据用户的请求方式
+       get  请求 转发给 doGet方法进行处理
+       post	请求 转发给 doPost方法进行处理
+    
+    4:正常关闭tomcat服务器的时候自动调用destroy()方法释放对象
+            占用的内存空间  
+    Servlet是单例 仅仅一个对象来处理所有用户的请求
+                                     但 Servlet本身是线程安全的 
+                                    但注意：最好不好把单个用户的请求数据存储在成员属性
+                                                  或静态属性中
+                      这样可能会造成线程不安全                   
+            
+   Servlet web.xml中如果配置了
+     <load-on-startup>1</load-on-startup>    
+  2：    那么这个 Servlet的生命周期：
+       1：tomcat服务器启动的时候 调用 构造器进行实例化Servlet对象
+             init()方法进行初始化
+             
+       2：用户请求的时候直接调用 service()方法处理用户请求
+             由 service()方法根据请求方式 
+             get 请求自动调用 doGet()方法处理用户请求
+             post请求自动调用 doPost)方法处理用户请求  
+       3:在正常关闭 tomcat服务器的时候调用destroy()方向销毁Servlet对象 
+         

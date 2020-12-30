@@ -1,0 +1,85 @@
+1:jdbc (java Database Connection) java连接数据库接口
+  java.sql.*
+  
+ jdbc重要的一个类：
+             DriverManager  驱动类的管理类
+             
+ jdbc重要的4个接口：  
+         Connection         数据库连接接口
+         Statement          可以执行sql语句的接口
+         PerparedStatement  可以预编译执行sql语句的接口
+                                                        是Statement子接口
+         ResultSet          查询记录集接口
+         
+ jdbc步骤：
+   1：引入jdbc的实现类jar包
+            加载驱动类
+        Class.forName("驱动类类路径");       
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+   2：建立数据库连接
+      Connection conn=DriverManager.getConnection(url,name,pass);
+         url:   jdbc:oracle:thin:@127.0.0.1:1521:orcl
+         name:  scott
+         pass:  tiger           
+   3:创建一个可以执行sql语句的对象
+        Statement stmt=conn.createStatement();       
+    PerparedStatement pstmt=conn.perpareStatement(sql); 
+    
+    4: 执行sql语句并处理结果：
+        stmt->    executeQuery(sql);    返回 ResultSet
+                  executeUpdate(sql);   返回 int
+                  execute(sql)          返回 boolean
+           
+        pstmt->   executeQuery();
+             ? 需要处理
+             pstmt.set数据类型(位置,值)
+             pstmt.setObject(位置,值)
+    5:释放资源     
+         ResultSet  Statement   Connection
+         
+   jdbc 把emp表的所有数据打印到控制台
+   
+  jdbc的事务处理： 
+        事务：是一个统一要执行的sql单元 要不同时执行 要不都不执行
+        特点：ACID
+         A -->atomicity     原子性
+         C--》 Consistency   一致性
+         I->  isolation     隔离性
+         D-> durability     持久性
+         
+  jdbc的事务默认是自动提交的       
+        try{        
+         Connection.setAutoCommit(false)     
+         PerparedStatement执行若干条sql       
+         Connection.commit();
+         
+        }catch(Exception e){
+           Connection.rollback();
+        }
+        
+  jdbc的批处理：Batch
+  
+   PerparedStatement pstmt=Connection.perpareStatement(sql);
+   for(int i=0;i<100;i++){
+      pstmt.setxxxx(1,xx);
+      ....
+      pstmt.setxxxx(n,xx);
+      pstmt.addBatch();
+   }
+   pstmt.executeBatch();
+   
+  Statement与 PerparedStatement 区别：
+  
+    Statement  不安全 可能产生sql注入攻击
+  
+  PerparedStatement 预处理sql防止sql注入攻击
+                                        是Statement子接口
+                    在一条sql如果要多次运行 他的性能比Statement高                    
+  
+      
+      
+          
+   
+   
+   
+         

@@ -1,0 +1,88 @@
+1:jsp（java Server Page）运行在服务器端的java页面
+
+ jsp  里面包含 html css  javaScript--》跟html里面的写法一致
+        +java代码
+        
+  jsp里面 java代码：
+        1：全局变量与方法
+           <%!  
+           
+            %>
+        2:局部变量与普通代码块
+         <%  
+         
+         %>
+         3:输出   <%= %>
+         
+ jsp 的九大内置对象： 不需要new 操作 可以直接使用的对象
+    1:request  -->代表客户端的请求信息对象
+              String value=request.getParameter("请求参数名");
+              String value[]=request.getParameterValues("请求参数名");
+              
+               request.setCharacterEnconding("UTF-8"); 设置请求编码
+               request.getProtocol() 获取请求协议
+               request.getScheme() 获取请求协议
+               request.getContextPath() 获取当前项目名称
+               request.getServerName()   获取服务器名称
+               request.getServerPort()  获取服务器端口号
+               request.getRequestURL() 获取请求的完整路径浏览器的url
+               request.getRequestURI() 获取请求的相对路径
+               request.getRemoteAddr()  获取客户端请求者的IP
+               
+              //请求转发 
+               request.getRequestDispatcher("要跳转的路径")
+                      .forward( request,response)
+               
+                    请求转发特点：
+                   1：转发是服务器内部的跳转 浏览器url不发生改变的
+                   2：可以传递 request范围的值
+                                      转发页面可以  request.setAttribute("key",值);
+                                       设置一个值在request范围
+                                     在 转发到的页面    request.getAttribute("key")
+                                 来获取   request范围  key对应的值                                               
+                     
+              
+    2:response  -->代表服务器端的响应信息对象
+          response.setCharacterEnconding("UTF-8"); 设置响应编码
+          response.sendRedirect("重定向的页面");
+          response.getWriter();获取输出流
+    
+      重定向：重定向是客户端的跳转 浏览器的url会发生变化
+                      浏览器的url会发生变化导致不是一次请求 所以
+                   不能传递  request范围   值      
+                但可以     重定向的页面?key=value&.......传值    
+              重定向可以实现跨应用级别的跳转       
+         response.sendRedirect("重定向的页面");
+       
+    3:session  用户的一次会话 只要不关闭浏览器 单个用户共享
+                            或者超时时间未到都会一直存在服务器端
+             session.setAttribute("key",值);               
+             session.getAttribute("key");  
+             session.removeAttribute("key"); 删除单个            
+             session.invalidate();    重置删除所有
+             session.isNew()       判断是否是一个新的会话
+    
+    4:application  全局的 所有用户共享的
+             application.setAttribute("key",值);               
+             application.getAttribute("key");  
+    5:out     输出流  
+                out.print()
+    6:page      相当 this 
+    7:pageContext 当前页面的上下文  可以用来获取其他内置对象
+             pageContext.setAttribute("key",值);               
+             pageContext.getAttribute("key");  
+             
+    8:exception  异常处理对象
+               1：指定如果页面发生了异常 异常页面是谁
+                 <%@page errorPage="exception.jsp"%>
+                 
+              2:异常页面申明是异常页面 exception.jsp:
+                 <%@page isErrorPage="true"%>
+                              该页面才能获取到  exception内置对象
+              exception.getMessage()             
+                              
+    9:config 读取配置信息对象
+ 
+ 
+ 
+            

@@ -1,0 +1,28 @@
+1:Servlet 运行的服务器端的组件 可以用来处理用户的请求
+
+2：怎么写Servlet
+  a:写一个类  继承HttpServlet
+  b:重写service()方法
+  c:需要在web.xml里面进行配置
+  
+3:Servlet生命周期：
+     1:
+       在用户第一次请求的时候的 调用 构造方法进行实例化
+       然后 调用 init方法进行初始化（这两个方法仅仅执行一次）
+    最后 调用 service 方法进行处理用户请求 
+    service根据请求的方式 来调用 doGet doPost方法
+  在服务器（tomcat）正常关闭的时候 调用destroy方法来释放资源
+  
+  2：如果在web.xml 给Servlet 配置了
+     <load-on-startup>0-9</load-on-startup>
+    Servlet 会在服务器(tomcat)启动的时候
+       调用 构造方法进行实例化
+       然后 调用 init方法进行初始化（这两个方法仅仅执行一次）
+       
+      每次用户请求的时候调用 service 方法进行处理用户请求 
+    service根据请求的方式 来调用 doGet doPost方法
+  在服务器（tomcat）正常关闭的时候 调用destroy方法来释放资源    
+       
+    
+       
+  
