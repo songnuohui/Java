@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thmeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>员工列表</h3>
+<div align="center" style="background-color: aquamarine" >
+    <form th:action="@{/update}" method="post">
+        <input type="hidden" name="id" th:value="${emp.getId()}">
+        <div align="center"style="padding: 15px;width: 200px">
+            <input type="text" th:value="${emp.getName}" style="width: 200px;height: 20px" placeholder="姓名" name="name"/>
+        </div>
+        <div align="center" style="padding: 15px;width: 200px">
+            <input type="email" th:value="${emp.getEmail}" style="width: 200px;height: 20px" placeholder="邮箱" name="email"/>
+        </div>
+        <div align="center">
+            性别
+            <input type="radio" th:checked="${emp.getGender==1}" name="gender" value="1"/>
+            <label>男</label>
+            <input type="radio" th:checked="${emp.getGender==0}" name="gender" value="0"/>
+            <label>女</label>
+        </div>
+        <div align="center" style="padding: 15px;width: 200px">
+            <select name="department.id">
+                <option th:each="dept:${department}" th:selected="${dept.getId()==emp.getDepartment().getId()}"  th:text="${dept.getDepartmentName()}"
+                        th:value="${dept.getId()}"> </option>
+            </select>
+        </div>
+        <div align="center"style="padding: 15px">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">提交</button>
+        </div>
+    </form>
+</div>
+<a style="text-decoration: none" th:href="@{/back}">返回首页</a>
+
+</body>
+</html>

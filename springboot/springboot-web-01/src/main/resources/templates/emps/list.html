@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thmeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>员工列表</h3>
+<div align="center">
+    <h2 style="color: green"><a th:href="@{/toAdd}">添加员工</a></h2>
+    <table>
+        <thead>
+        <tr>
+            <th width="150px" align="center">id</th>
+            <th width="150px" align="center">name</th>
+            <th width="150px" align="center">email</th>
+            <th width="150px" align="center">gender</th>
+            <th width="150px" align="center">department</th>
+            <th width="150px" align="center">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="emp:${emps}">
+            <td width="150px" align="center" th:text="${emp.getId()}"></td>
+            <td width="150px" align="center" th:text="${emp.getName()}"></td>
+            <td width="150px" align="center" th:text="${emp.getEmail()}"></td>
+            <td width="150px" align="center" th:text="${emp.getGender()==0?'女':'男'}"></td>
+            <td width="150px" align="center" th:text="${emp.department.getDepartmentName()}"></td>
+            <td width="150px" align="center">
+                <a style="color: blue" th:href="@{/toUpdate/}+${emp.getId()}">编辑</a>
+                <a style="color: #ff0000" th:href="@{/delete/}+${emp.getId()}" >删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<a style="text-decoration: none" th:href="@{/back}">返回首页</a>
+</body>
+</html>

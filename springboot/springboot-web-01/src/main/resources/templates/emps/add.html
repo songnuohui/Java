@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thmeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>员工列表</h3>
+<div align="center" style="background-color: aquamarine" >
+    <form th:action="@{/insert}" method="post">
+        <div align="center"style="padding: 15px;width: 200px">
+            <input type="text" style="width: 200px;height: 20px" placeholder="姓名" name="name"/>
+        </div>
+        <div align="center" style="padding: 15px;width: 200px">
+            <input type="email" style="width: 200px;height: 20px" placeholder="邮箱" name="email"/>
+        </div>
+        <div align="center">
+            性别
+            <input type="radio" name="gender" value="1"/>
+            <label>男</label>
+            <input type="radio" name="gender" value="0"/>
+            <label>女</label>
+        </div>
+        <div align="center" style="padding: 15px;width: 200px">
+            <select name="department.id">
+                <option th:each="dept:${department}" th:text="${dept.getDepartmentName()}"
+                th:value="${dept.getId()}"> </option>
+            </select>
+        </div>
+        <div align="center"style="padding: 15px">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">提交</button>
+        </div>
+    </form>
+</div>
+<a style="text-decoration: none" th:href="@{/back}">返回首页</a>
+
+</body>
+</html>

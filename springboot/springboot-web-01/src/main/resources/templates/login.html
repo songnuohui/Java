@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thmeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div align="center" style="background-color: aquamarine" >
+    <form th:action="@{/user/login}">
+        <p align="center"style="color: red"th:text="${msg}"th:if="${not #strings.isEmpty(msg)}"></p>
+        <div align="center"style="padding: 15px">
+            <input type="username" style="width: 200px;height: 20px" placeholder="账号" name="username"/>
+        </div>
+        <div align="center" style="padding: 15px">
+            <input type="password" style="width: 200px;height: 20px" placeholder="密码" name="password"/>
+        </div>
+        <div align="center"style="padding: 15px">
+                <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
